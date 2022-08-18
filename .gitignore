@@ -3,6 +3,7 @@
 test*
 *a.ou*
 old*
+pipex
 *.o
 *.a
 *obj
