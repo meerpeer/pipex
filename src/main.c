@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:39:26 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/18 14:57:56 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/18 15:27:54 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ char	*get_cmd_path(char *cmd, char **envp)
 	{
 		if (ft_strnstr(envp[i], "PATH=", 5))
 		{
-			PATH_str = ft_substr(envp[i], 5 , ft_strlen(envp[i] - 5));
+			PATH_str = ft_substr(envp[i], 5 , ft_strlen(envp[i]) - 5);
 			if (!PATH_str)
 				return (NULL);
 			break;
 		}
 		i++;
 	}
-	ft_printf("path str = %s\n", PATH_str);
 	paths = ft_split(PATH_str, ':');
 	i = 0;
 	while (paths[i])
@@ -48,7 +47,6 @@ char	*get_cmd_path(char *cmd, char **envp)
 		cmd_path = ft_strjoin(paths[i], cmd);
 		if (access(cmd_path, F_OK | X_OK) == 0) // look up f_OK and X_OK and acces
 			return (cmd_path);
-		ft_printf("cmd path = %s\n", cmd_path);
 		free (cmd_path);
 		i++;
 	}
