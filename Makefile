@@ -1,9 +1,9 @@
-NAME = push_swap
+NAME = pipex
 CFLAGS ?= -Wall -Wextra -Werror
 # -fsanitize=address -g
 CC = gcc
 
-HEADERFILES = include/push_swap.h
+HEADERFILES = include/pipex.h
 
 SRC_FILES = main.c\
 
