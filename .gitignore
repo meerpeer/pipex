@@ -1,0 +1,8 @@
+.DS*
+test*
+*a.ou*
+old*
+*.o
+*.a
+*obj
+.vscode*
