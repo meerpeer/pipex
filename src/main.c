@@ -6,52 +6,11 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:39:26 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/18 15:27:54 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/19 16:56:20 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-
-char	*get_cmd_path(char *cmd, char **envp)
-{
-	char	**paths;
-	char	*cmd_path;
-	char	*PATH_str = NULL;
-	char	*tmp;
-	int		i;
-	
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH=", 5))
-		{
-			PATH_str = ft_substr(envp[i], 5 , ft_strlen(envp[i]) - 5);
-			if (!PATH_str)
-				return (NULL);
-			break;
-		}
-		i++;
-	}
-	paths = ft_split(PATH_str, ':');
-	i = 0;
-	while (paths[i])
-	{
-		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], "/");
-		free (tmp);
-		i++;
-	}
-	i = 0;
-	while (paths[i])
-	{
-		cmd_path = ft_strjoin(paths[i], cmd);
-		if (access(cmd_path, F_OK | X_OK) == 0) // look up f_OK and X_OK and acces
-			return (cmd_path);
-		free (cmd_path);
-		i++;
-	}
-	exit (1);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -61,13 +20,64 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+//	(void) envp;
 	cmd_path = get_cmd_path(cmd, envp);
 	if (!cmd_path)
 	{
 		perror(cmd_path);
 		return (-1);
 	}
-	ft_printf("cmd path = %s\n", cmd_path);
+	
 	execve(cmd_path, options, envp);
 	return (0);
+
+	pid_t	pid1;
+	pid_t	pid2;
+	pid_t	res;
+	int		status;
+	int		ends[2];
+	
+	if (pipe(ends) == -1)
+		return (1);
+	pid1 = fork();
+	if (pid1 == -1)
+		return (1);
+	if (pid1 == 0)
+	{
+		usleep(50000);
+		ft_printf("Child 1: I'm the first child\n");
+		return (0);
+	}
+	else if (pid1 > 0)
+	{
+		pid2 = fork();
+		if (pid2 == -1)
+			return (1);
+		else if (pid2 == 0)
+		{
+			usleep(60000);
+			printf("child 2: second child ...\n");
+			return (2);
+		}
+		else if (pid2 > 0)
+		{
+			ft_printf("Parent: I have 2 children\n");
+			res = waitpid(pid1, &status, 0);
+			ft_printf("parent: received child1 %d\n", res);
+			if(WIFEXITED(status))
+				ft_printf("Parent: it exited succesfully with code: %i\n", WEXITSTATUS(status));
+			else
+				ft_printf("Parent : it was interupted\n");
+			res = waitpid(pid2, &status, 0);
+			ft_printf("parent: received child2 %d\n", res);
+			if(WIFEXITED(status))
+				ft_printf("Parent: it exited succesfully with code: %i\n", WEXITSTATUS(status));
+			else
+				ft_printf("Parent : it was interupted\n");
+		}
+	}
+	return 0;
 }
+
+//open trunc creat rdwr
+//while (wait(NULL) > 0) for making sure all child processes are done
