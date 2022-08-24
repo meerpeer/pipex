@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/24 14:45:47 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 16:46:12 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/24 17:44:42 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	child2_process(int fd_outfile, int pipe_end[2], char *cmd2, char **envp)
 	if (!split_cmd)
 		exit (1);
 	execve(get_cmd_path(split_cmd[0], envp), split_cmd, envp);
-	free_2d_array(split_cmd);
+	//free_2d_array(split_cmd);
 	exit (1);
 }
 
@@ -63,7 +63,7 @@ void	start_pipex(int infile_fd, int outfile_fd, char **argv, char **envp)
 	close(ends[1]);
 	close(infile_fd);
 	close(outfile_fd);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	while (wait(NULL) > 0)
+		continue ;
 	return ;
 }
