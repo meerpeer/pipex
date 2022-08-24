@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:39:26 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 16:31:40 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/24 16:45:19 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	int	fd_out;
 
 	if (argc != 5)
-		exit (1); // add correct error
+		exit (1);
 	fd_in = open(argv[1], O_RDONLY);
 	fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_in < 0 || fd_out < 0)

@@ -8,3 +8,4 @@ pipex
 *.a
 *obj
 .vscode*
+outfile*

@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 12:51:28 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 16:31:59 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/24 16:44:45 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_2d_array(char	**array)
 	int	i;
 
 	i = 0;
-	if(!array)
+	if (!array)
 		return ;
 	while (array[i])
 	{
@@ -30,23 +30,23 @@ void	free_2d_array(char	**array)
 
 char	*get_path_str(char **envp)
 {
-	char	*PATH_str;
+	char	*path_str;
 	int		i;
 
 	i = 0;
-	PATH_str = NULL;
+	path_str = NULL;
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], "PATH=", 5))
 		{
-			PATH_str = ft_substr(envp[i], 5 , ft_strlen(envp[i]) - 5);
-			if (!PATH_str)
+			path_str = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
+			if (!path_str)
 				exit (1);
-			break;
+			break ;
 		}
 		i++;
 	}
-	return (PATH_str);
+	return (path_str);
 }
 
 void	append_str(char **path, char *str)
@@ -63,17 +63,17 @@ void	append_str(char **path, char *str)
 char	*get_cmd_path(char *cmd, char **envp)
 {
 	char	**paths;
-	char	*PATH_str;
+	char	*path_str;
 	int		i;
-	
-	PATH_str = get_path_str(envp);
-	paths = ft_split(PATH_str, ':');
+
+	path_str = get_path_str(envp);
+	paths = ft_split(path_str, ':');
 	i = 0;
 	while (paths[i])
 	{
 		append_str(&paths[i], "/");
 		append_str(&paths[i], cmd);
-		if (access(paths[i], F_OK | X_OK) == 0) // look up f_OK and X_OK and acces
+		if (access(paths[i], F_OK | X_OK) == 0)
 			return (paths[i]);
 		i++;
 	}
