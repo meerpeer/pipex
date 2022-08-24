@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:39:26 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 15:31:55 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/24 16:31:40 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,3 @@ int	main(int argc, char **argv, char **envp)
 	start_pipex(fd_in, fd_out, argv, envp);
 	return (0);
 }
-
-//open trunc creat rdwr
-//while (wait(NULL) > 0) for making sure all child processes are done
