@@ -5,7 +5,7 @@ CC = gcc
 
 HEADERFILES = include/pipex.h
 
-SRC_FILES = main.c cmd_path.c\
+SRC_FILES = main.c cmd_path.c pipex.c\
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 OBJS = $(addprefix obj/, $(OBJ_FILES))

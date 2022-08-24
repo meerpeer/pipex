@@ -6,11 +6,45 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 12:51:28 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/19 13:22:08 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/24 14:23:16 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+void	free_2d_array(char	**array)
+{
+	int	i;
+
+	i = 0;
+	if(!array)
+		return ;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free (array);
+	return ;
+}
+
+char	*get_options(char **cmd_and_options)
+{
+	int		i;
+	char	*options;
+	char	*tmp;
+
+	options = ft_strdup(cmd_and_options[1]);
+	i = 2;
+	while (cmd_and_options[i])
+	{
+		tmp = options;
+		options = ft_strjoin(options, cmd_and_options[i]);
+		free (tmp);
+		i++;
+	}
+	return (options);
+}
 
 char	*get_path_str(char **envp)
 {
