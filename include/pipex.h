@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:53:16 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 16:40:37 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/25 11:33:03 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <unistd.h>
 // to include wait
 # include <sys/wait.h>
-//# include <stdlib.h>
 # include <fcntl.h>
 
 char	*get_cmd_path(char *cmd, char **envp);
