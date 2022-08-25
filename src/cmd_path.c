@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 12:51:28 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/24 16:44:45 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/25 11:18:27 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,27 @@ char	*get_cmd_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*path_str;
+	char	*path;
 	int		i;
 
 	path_str = get_path_str(envp);
 	paths = ft_split(path_str, ':');
+	path = NULL;
 	i = 0;
 	while (paths[i])
 	{
 		append_str(&paths[i], "/");
 		append_str(&paths[i], cmd);
 		if (access(paths[i], F_OK | X_OK) == 0)
-			return (paths[i]);
+			path = ft_strdup(paths[i]);
 		i++;
 	}
+	if (path)
+	{
+		free (path_str);
+		free_2d_array (paths);
+		return (path);
+	}
+	perror(cmd);
 	exit (1);
 }
