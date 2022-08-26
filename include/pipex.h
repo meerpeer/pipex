@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:53:16 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/25 11:33:03 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/08/26 11:05:23 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@
 
 char	*get_cmd_path(char *cmd, char **envp);
 void	free_2d_array(char	**array);
-void	start_pipex(int infile_fd, int outfile_fd, char **argv, char **envp);
+void	start_pipex(char **argv, char **envp);
 
 #endif
