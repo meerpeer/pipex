@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 12:51:28 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/26 12:57:31 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/09/01 13:05:12 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_2d_array(char	**array)
 	return ;
 }
 
-char	*get_path_str(char **envp)
+char	*get_path_str(char **envp, char *cmd)
 {
 	char	*path_str;
 	int		i;
@@ -46,6 +46,13 @@ char	*get_path_str(char **envp)
 		}
 		i++;
 	}
+	if (!path_str)
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exit (1);
+	}
 	return (path_str);
 }
 
@@ -59,7 +66,7 @@ void	append_strs(char **path, char *str, char *str2)
 		exit (1);
 	free (tmp);
 	if (str2)
-		append_str(path, str2, NULL);
+		append_strs(path, str2, NULL);
 }
 
 char	*get_cmd_path(char *cmd, char **envp)
@@ -71,7 +78,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
-	path_str = get_path_str(envp);
+	path_str = get_path_str(envp, cmd);
 	paths = ft_split(path_str, ':');
 	path = NULL;
 	i = 0;
@@ -87,6 +94,6 @@ char	*get_cmd_path(char *cmd, char **envp)
 	if (path)
 		return (path);
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_putstr_fd("pipex: command not found\n", 2);
 	exit (127);
 }

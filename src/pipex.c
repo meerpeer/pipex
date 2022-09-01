@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/24 14:45:47 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/26 12:50:29 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/09/01 13:21:41 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	child2_process(char *outfile, int pipe_end[2], char *cmd2, char **envp)
 	fd_outfile = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_outfile < 0 || access(outfile, F_OK | W_OK) != 0)
 	{
+		ft_putstr_fd("pipex: ", 2);
 		perror(outfile);
 		exit (1);
 	}
@@ -33,7 +34,7 @@ void	child2_process(char *outfile, int pipe_end[2], char *cmd2, char **envp)
 		exit (1);
 	if (execve(get_cmd_path(split_cmd[0], envp), split_cmd, envp) == -1)
 	{
-		perror(NULL);
+		perror("pipex: ");
 		exit (1);
 	}
 	exit (1);
@@ -48,19 +49,20 @@ void	child1_process(char *infile, int pipe_end[2], char *cmd1, char **envp)
 	fd_infile = open(infile, O_RDONLY);
 	if (fd_infile < 0)
 	{
+		ft_putstr_fd("pipex: ", 2);
 		perror(infile);
 		exit (1);
 	}
 	dup2(fd_infile, STDIN_FILENO);
 	dup2(pipe_end[1], STDOUT_FILENO);
-	close(pipe_end[1]);
 	close(fd_infile);
+	close(pipe_end[1]);
 	split_cmd = ft_split(cmd1, ' ');
 	if (!split_cmd)
 		exit (1);
 	if (execve(get_cmd_path(split_cmd[0], envp), split_cmd, envp) == -1)
 	{
-		perror(NULL);
+		perror("pipex :");
 		exit (1);
 	}
 	exit (1);
@@ -77,12 +79,12 @@ void	start_pipex(char **argv, char **envp)
 		exit (1);
 	pid1 = fork();
 	if (pid1 < 0)
-		return (perror("fork"));
+		return (perror("pipex: "));
 	else if (pid1 == 0)
 		child1_process(argv[1], ends, argv[2], envp);
 	pid2 = fork();
 	if (pid2 < 0)
-		return (perror("fork"));
+		return (perror("pipex: "));
 	else if (pid2 == 0)
 		child2_process(argv[4], ends, argv[3], envp);
 	close(ends[0]);
