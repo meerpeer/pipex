@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/19 12:51:28 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/09/01 13:05:12 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/09/01 15:01:33 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	*get_cmd_path(char *cmd, char **envp)
 	free_2d_array (paths);
 	if (path)
 		return (path);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("pipex: command not found\n", 2);
+	print_error(cmd, ": command not found\n", FALSE);
 	exit (127);
 }

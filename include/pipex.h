@@ -6,7 +6,7 @@
 /*   By: mevan-de <mevan-de@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 13:53:16 by mevan-de      #+#    #+#                 */
-/*   Updated: 2022/08/26 11:05:23 by mevan-de      ########   odam.nl         */
+/*   Updated: 2022/09/01 14:59:54 by mevan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,15 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
+typedef enum e_bool
+{
+	FALSE = 0,
+	TRUE = 1
+}			t_bool;
+
 char	*get_cmd_path(char *cmd, char **envp);
-void	free_2d_array(char	**array);
-void	start_pipex(char **argv, char **envp);
+void	free_2d_array(char **array);
+void	start_pipex(int fd_in, int fd_out, char **argv, char **envp);
+void	print_error(char *str1, char *str2, t_bool should_perror);
 
 #endif
